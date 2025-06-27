@@ -1,4 +1,4 @@
-# This file will push GitHub notifications to a Discord bot
+# This file will push github notification to discord bot!
 
 name: Notify Discord on Push
 
@@ -12,16 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send embed message to Discord
-        uses: tsickert/discord-message-notify@v1
+      - name: Send push message to Discord
+        uses: Ilshidur/action-discord@master
         with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          embed-title: "[${{ github.repository }}] New push to `${{ github.ref_name }}`"
-          embed-description: |
-            **Author:** ${{ github.actor }}
-            **Commit:** ${{ github.event.head_commit.message }}
-
-            🔗 [View Commit](${{ github.event.head_commit.url }})
-          embed-color: 65280  # Xanh lá (mã RGB decimal)
+          args: |
+            [${{ github.repository }}] Push by ${{ github.actor }} to `${{ github.ref_name }}`
+            Latest commit: ${{ github.event.head_commit.message }}
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
