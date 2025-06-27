@@ -1,4 +1,4 @@
-# This file will push github notification to discord bot!
+# This file will push GitHub notifications to a Discord bot
 
 name: Notify Discord on Push
 
@@ -16,7 +16,12 @@ jobs:
         uses: Ilshidur/action-discord@master
         with:
           args: |
-            [${{ github.repository }}] Push by ${{ github.actor }} to `${{ github.ref_name }}`
-            Latest commit: ${{ github.event.head_commit.message }}
+            **[${{ github.repository }}] New Push Detected**
+            **Author:** ${{ github.actor }}
+            **Branch:** `${{ github.ref_name }}`
+            **Commit Message:**  
+            > ${{ github.event.head_commit.message }}
+
+            [View Commit](${{ github.event.head_commit.url }})
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
