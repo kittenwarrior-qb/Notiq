@@ -1,20 +1,20 @@
-name: Notify Discord on Pull Request
+name: Notify Discord on Push
 
 on:
-  pull_request:
-    types: [opened]
+  push:
+    branches:
+      - main
 
 jobs:
   discord-notify:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send pull request info to Discord
+      - name: Send push message to Discord
         uses: Ilshidur/action-discord@v1
         with:
           args: |
-            [${{ github.repository }}] Pull request opened: #${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}
-
-            ${{ github.event.pull_request.body }}
+            [${{ github.repository }}] Push by ${{ github.actor }} to `${{ github.ref_name }}`
+            Latest commit: ${{ github.event.head_commit.message }}
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
