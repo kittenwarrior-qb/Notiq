@@ -1,3 +1,5 @@
+# This file will push github notification to discord bot
+
 name: Notify Discord on Push
 
 on:
