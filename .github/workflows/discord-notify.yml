@@ -12,16 +12,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send push message to Discord
-        uses: Ilshidur/action-discord@master
+      - name: Send embed message to Discord
+        uses: tsickert/discord-message-notify@v1
         with:
-          args: |
-            **[${{ github.repository }}] New Push Detected**
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          embed-title: "[${{ github.repository }}] New push to `${{ github.ref_name }}`"
+          embed-description: |
             **Author:** ${{ github.actor }}
-            **Branch:** `${{ github.ref_name }}`
-            **Commit Message:**  
-            > ${{ github.event.head_commit.message }}
+            **Commit:** ${{ github.event.head_commit.message }}
 
-            [View Commit](${{ github.event.head_commit.url }})
+            🔗 [View Commit](${{ github.event.head_commit.url }})
+          embed-color: 65280  # Xanh lá (mã RGB decimal)
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
